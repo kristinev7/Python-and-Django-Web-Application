@@ -12,7 +12,7 @@ from django.urls import reverse_lazy  #waits until the post has been deleted to 
 
 
 class AboutView(TemplateView):
-    template_name = 'my_blog/about.html'
+    template_name = 'about.html'
 
 
 #home page
@@ -62,21 +62,28 @@ class DraftListView(LoginRequiredMixin, ListView):
 ###########################################
 #functions
 ##########################################
+#publish post
+@login_required
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=post.pk)
+
+
 #get user comments for a post
 @login_required  #require user to be logged in to leave a comment
 def add_comment_to_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('my_blog/post_detail', pk=post.pk)
-    else:
+      form = CommentForm(request.POST)
+      if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+        return redirect('post_detail', pk=post.pk)
+      else:
         form = CommentForm()
-    return render(request, 'my_blog/comment_form.html', {'form': form})
-
+        return render(request, 'my_blog/comment_form.html', {'form': form})
 
 #commend approval
 @login_required
@@ -92,11 +99,3 @@ def comment_remove(request, pk):
     post_pk = comment.post.pk  #save the comment pk to another variable so we dont lose it
     comment.delete()
     return redirect('post_detail', pk=post_pk)
-
-
-#publish post
-@login_required
-def post_publish(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.publish()
-    return redirect('post_detail', pk=pk)

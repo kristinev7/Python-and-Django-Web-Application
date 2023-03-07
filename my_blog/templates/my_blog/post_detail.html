@@ -7,7 +7,7 @@
     {{ post.published_date }}
   </div>
 {% else %}
-  <a class="btn btn-outline-dark" href="{% url 'my_blog:post_publish' pk=post.pk %}">Publish</a>
+  <a class="btn btn-outline-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
 {% endif %}
 
 <p class="postcontent">{{ post.text|safe|linebreaksbr}}</p>
@@ -15,10 +15,10 @@
 {% if user.is_authenticated %}
 
 <!-- button to edit or remove a post -->
-  <a class="btn btn-primary" href="{% url 'my_blog:post_edit' pk=post.pk %}">
+  <a class="btn btn-primary" href="{% url 'post_edit' pk=post.pk %}">
     <span class="fa fa-pencil"></span>
   </a>
-<a class="btn btn-primary" href="{% url 'my_blog:post_remove' pk=post.pk %}">
+<a class="btn btn-primary" href="{% url 'post_remove' pk=post.pk %}">
     <span class="fa fa-remove"></span>
   </a>
 {% endif %}
@@ -26,7 +26,7 @@
 <hr>
 
 <!-- button to add a comment -->
-<a class="btn btn-primary btn-comment" href="{% url 'my_blog:add_comment_to_post' pk=post.pk %}">Add comment</a>
+<a class="btn btn-primary btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
 
 <!-- let's see all the comments -->
 <div class="container">
@@ -37,10 +37,10 @@
       {{ comment.created_date }}
         {% if not comment.approved_comment %}
 <!--       button to remove or delete comment -->
-          <a class="btn btn-primary" href="{% url 'my_blog:comment_remove' pk=comment.pk %}">
+          <a class="btn btn-primary" href="{% url 'comment_remove' pk=comment.pk %}">
             <span class="fa fa-remove"></span>
           </a>
-          <a class="btn btn-primary" href="{% url 'my_blog:comment_approve' pk=comment.pk %}">
+          <a class="btn btn-primary" href="{% url 'comment_approve' pk=comment.pk %}">
             <span class="fa fa-check"></span>
           </a>
         {% endif %}

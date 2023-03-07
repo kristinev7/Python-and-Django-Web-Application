@@ -1,12 +1,12 @@
 from django.urls import path
 from my_blog import views
 
-app_name = "my_blog"
+
 urlpatterns = [
     #home page is list of posts
     path('', views.PostListView.as_view(), name='post_list'),
     path('about/', views.AboutView.as_view(), name='about'),
-    path('post/<int:pk>', views.PostDetailView.as_view(), name='post_detail'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post_detail'),
     path('post/new/', views.CreatePostView.as_view(), name='post_new'),
     path('post/<int:pk>/edit/',
          views.PostUpdateView.as_view(),
@@ -24,5 +24,5 @@ urlpatterns = [
     path('comment/<int:pk>/remove/',
          views.comment_remove,
          name='comment_remove'),
-    path('post/<int:pk>/publish/', views.post_publish, name='post_publish'),
+    path('post/<int:pk>/publish', views.post_publish, name='post_publish'),
 ]
