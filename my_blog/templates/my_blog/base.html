@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>Blog</title>
+<!--   Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<!-- Alternative to Bootstrap 3 Glyphicons -->
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<!--   Medium Style Editor -->
+   <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+<!--   CSS link -->
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+<!--   Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Russo+One" rel="stylesheet">
+</head>
+  
+<body class="loader">
+<!--   Navbar -->
+  <nav class="navbar navbar-expand-lg bg-light techfont">
+    <div class="container">
+      <div class="navbar-nav align-items-center">
+        <a class="navbar-brand bigbrand" href="{% url 'my_blog:post_list' %}">My Blog</a>
+        <a class="nav-item nav-link" href="{% url 'my_blog:about' %}">About</a>
+        <a class="nav-item nav-link" href="https://www.github.com">Github</a>
+        <a class="nav-item nav-link" href="https://www.linkedin.com">LinkedIn</a>
+      </div>
+
+      <div class="navbar-nav align-items-center ml-auto">
+        {% if user.is_authenticated %}
+        <a class="nav-item nav-link" href="{% url 'my_blog:post_new' %}">New Post</a>
+        <a class="nav-item nav-link" href="{% url 'my_blog:post_draft_list' %}">Drafts</a>
+        <a class="nav-item nav-link" href="{% url 'logout' %}">Log Out</a>
+        <a>Welcome: {{user.username}}</a>
+        {% else %}
+        <a class="nav-item nav-link" href="{% url 'login' %}" aria-label="Login"><span class="fa fa-user" aria-hidden="true"></span></a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+<!--   CONTENT BLOCK -->
+  <div class="content container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="blog_posts">
+          {% block content %}
+            
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
